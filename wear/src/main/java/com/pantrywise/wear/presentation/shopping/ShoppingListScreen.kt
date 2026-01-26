@@ -25,6 +25,7 @@ import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.items
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.Checkbox
+import androidx.wear.compose.material.CheckboxDefaults
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
@@ -141,8 +142,8 @@ private fun ShoppingItemChip(
         toggleControl = {
             Checkbox(
                 checked = item.isChecked,
-                colors = ToggleChipDefaults.toggleChipColors(
-                    checkedToggleControlColor = PantryGreen
+                colors = CheckboxDefaults.colors(
+                    checkedBoxColor = PantryGreen
                 )
             )
         },

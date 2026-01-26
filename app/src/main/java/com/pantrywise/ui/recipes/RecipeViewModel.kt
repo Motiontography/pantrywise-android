@@ -6,7 +6,7 @@ import com.pantrywise.data.local.entity.ProductEntity
 import com.pantrywise.data.repository.ProductRepository
 import com.pantrywise.data.repository.ShoppingRepository
 import com.pantrywise.domain.model.SourceType
-import com.pantrywise.domain.model.Unit
+import com.pantrywise.domain.model.Unit as MeasurementUnit
 import com.pantrywise.domain.usecase.ParseIngredientsUseCase
 import com.pantrywise.domain.usecase.ParsedIngredient
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -66,7 +66,7 @@ class RecipeViewModel @Inject constructor(
                 listId = activeList.id,
                 productId = product.id,
                 quantity = ingredient.quantity ?: 1.0,
-                unit = ingredient.unit ?: Unit.EACH,
+                unit = ingredient.unit ?: MeasurementUnit.EACH,
                 reason = "From recipe",
                 suggestedBy = SourceType.RECIPE_PARSE
             )
@@ -103,7 +103,7 @@ class RecipeViewModel @Inject constructor(
         val product = ProductEntity(
             name = ingredient.ingredientName.replaceFirstChar { it.uppercase() },
             category = "Other",
-            defaultUnit = ingredient.unit ?: Unit.EACH,
+            defaultUnit = ingredient.unit ?: MeasurementUnit.EACH,
             source = SourceType.RECIPE_PARSE,
             userConfirmed = false
         )

@@ -248,7 +248,6 @@ private fun ParseIngredientsContent(
                     Text("Add ${uiState.unmatchedCount} Items to Shopping List")
                 }
             }
-        }
     }
 }
 

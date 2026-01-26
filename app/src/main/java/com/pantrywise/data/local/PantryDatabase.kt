@@ -14,6 +14,7 @@ import com.pantrywise.data.local.dao.*
 import com.pantrywise.data.local.entity.*
 import com.pantrywise.data.local.entity.MealType
 import com.pantrywise.domain.model.*
+import com.pantrywise.domain.model.Unit as MeasurementUnit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -227,10 +228,10 @@ class Converters {
     private val gson = Gson()
 
     @TypeConverter
-    fun fromUnit(value: Unit): String = value.name
+    fun fromUnit(value: MeasurementUnit): String = value.name
 
     @TypeConverter
-    fun toUnit(value: String): Unit = Unit.valueOf(value)
+    fun toUnit(value: String): MeasurementUnit = MeasurementUnit.valueOf(value)
 
     @TypeConverter
     fun fromStockStatus(value: StockStatus): String = value.name

@@ -6,7 +6,7 @@ import com.pantrywise.data.local.dao.MealPlanEntryWithRecipe
 import com.pantrywise.data.local.entity.*
 import com.pantrywise.data.repository.MealPlanRepository
 import com.pantrywise.data.repository.ShoppingRepository
-import com.pantrywise.domain.model.Unit
+import com.pantrywise.domain.model.Unit as MeasurementUnit
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -193,19 +193,30 @@ class MealPlanViewModel @Inject constructor(
 
             // Add each ingredient
             for (ingredient in ingredients) {
-                val unit = try {
-                    Unit.valueOf(ingredient.unit.uppercase())
-                } catch (e: Exception) {
-                    Unit.EACH
-                }
+                val productId = ingredient.productId
+                if (productId != null) {
+                    val unit = try {
+                        MeasurementUnit.valueOf(ingredient.unit.uppercase())
+                    } catch (e: Exception) {
+                        MeasurementUnit.EACH
+                    }
 
-                shoppingRepository.addItemToList(
-                    listId = list.id,
-                    productId = ingredient.productId,
-                    quantity = ingredient.quantity,
-                    unit = unit,
-                    reason = "From meal plan: $listName"
-                )
+                    shoppingRepository.addItemToList(
+                        listId = list.id,
+                        productId = productId,
+                        quantity = ingredient.quantity,
+                        unit = unit,
+                        reason = "From meal plan: $listName"
+                    )
+                } else {
+                    // Use name-based overload when no product ID
+                    shoppingRepository.addItemToList(
+                        listId = list.id,
+                        name = ingredient.name,
+                        quantity = ingredient.quantity,
+                        unit = ingredient.unit
+                    )
+                }
             }
 
             _uiState.update {

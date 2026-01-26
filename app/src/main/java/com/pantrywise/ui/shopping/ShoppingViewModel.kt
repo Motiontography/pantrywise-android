@@ -6,7 +6,7 @@ import com.pantrywise.data.local.entity.*
 import com.pantrywise.data.repository.ProductRepository
 import com.pantrywise.data.repository.ShoppingRepository
 import com.pantrywise.domain.model.SourceType
-import com.pantrywise.domain.model.Unit
+import com.pantrywise.domain.model.Unit as MeasurementUnit
 import com.pantrywise.domain.usecase.GenerateSuggestionsUseCase
 import com.pantrywise.domain.usecase.ShoppingSuggestion
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -101,7 +101,7 @@ class ShoppingViewModel @Inject constructor(
         }
     }
 
-    fun addItemToList(productId: String, quantity: Double, unit: Unit) {
+    fun addItemToList(productId: String, quantity: Double, unit: MeasurementUnit) {
         viewModelScope.launch {
             val activeList = _uiState.value.activeList ?: return@launch
             shoppingRepository.addItemToList(

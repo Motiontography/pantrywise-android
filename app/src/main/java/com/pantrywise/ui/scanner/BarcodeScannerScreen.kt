@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pantrywise.data.local.entity.ProductEntity
 import com.pantrywise.domain.model.LocationType
-import com.pantrywise.domain.model.Unit
+import com.pantrywise.domain.model.Unit as MeasurementUnit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -179,12 +179,12 @@ fun BarcodeScannerScreen(
 fun ManualEntryDialog(
     barcode: String,
     onDismiss: () -> Unit,
-    onSave: (name: String, brand: String?, category: String, unit: Unit) -> Unit
+    onSave: (name: String, brand: String?, category: String, unit: MeasurementUnit) -> Unit
 ) {
     var name by remember { mutableStateOf("") }
     var brand by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("Other") }
-    var selectedUnit by remember { mutableStateOf(Unit.EACH) }
+    var selectedUnit by remember { mutableStateOf(MeasurementUnit.EACH) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -290,7 +290,7 @@ fun ProductConfirmationDialog(
 fun AddToInventoryDialog(
     product: ProductEntity,
     onDismiss: () -> Unit,
-    onAdd: (quantity: Double, unit: Unit, location: LocationType, expirationDate: Long?) -> Unit
+    onAdd: (quantity: Double, unit: MeasurementUnit, location: LocationType, expirationDate: Long?) -> Unit
 ) {
     var quantity by remember { mutableStateOf("1") }
     var selectedUnit by remember { mutableStateOf(product.defaultUnit) }

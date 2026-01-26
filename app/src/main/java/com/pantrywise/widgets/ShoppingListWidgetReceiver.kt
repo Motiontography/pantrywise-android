@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.*
@@ -148,7 +149,7 @@ private fun SmallShoppingWidget(summary: ShoppingListSummary) {
                 Box(
                     modifier = GlanceModifier
                         .fillMaxHeight()
-                        .fillMaxWidth(summary.progress)
+                        .fillMaxWidth()
                         .background(ColorProvider(Color(0xFF4CAF50)))
                         .cornerRadius(3.dp)
                 ) {}
@@ -219,7 +220,7 @@ private fun MediumShoppingWidget(
                 Box(
                     modifier = GlanceModifier
                         .fillMaxHeight()
-                        .fillMaxWidth(summary.progress)
+                        .fillMaxWidth()
                         .background(ColorProvider(Color(0xFF4CAF50)))
                         .cornerRadius(3.dp)
                 ) {}
@@ -298,7 +299,7 @@ private fun LargeShoppingWidget(
             Box(
                 modifier = GlanceModifier
                     .fillMaxHeight()
-                    .fillMaxWidth(summary.progress)
+                    .fillMaxWidth()
                     .background(ColorProvider(Color(0xFF4CAF50)))
                     .cornerRadius(4.dp)
             ) {}

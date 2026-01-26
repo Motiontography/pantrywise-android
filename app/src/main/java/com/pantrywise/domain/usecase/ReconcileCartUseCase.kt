@@ -7,7 +7,7 @@ import com.pantrywise.data.repository.PreferencesRepository
 import com.pantrywise.data.repository.ReconciliationResult
 import com.pantrywise.data.repository.ShoppingRepository
 import com.pantrywise.domain.model.CartMatchType
-import com.pantrywise.domain.model.Unit
+import com.pantrywise.domain.model.Unit as MeasurementUnit
 import javax.inject.Inject
 
 data class CartScanResult(
@@ -29,7 +29,7 @@ class ReconcileCartUseCase @Inject constructor(
         listId: String?,
         productId: String,
         quantity: Double,
-        unit: Unit,
+        unit: MeasurementUnit,
         unitPrice: Double? = null
     ): CartScanResult {
         val matchType = shoppingRepository.determineMatchType(productId, listId)

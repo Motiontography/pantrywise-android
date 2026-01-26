@@ -7,6 +7,7 @@ import com.pantrywise.data.local.dao.ShoppingListDao
 import com.pantrywise.data.local.dao.TransactionDao
 import com.pantrywise.data.local.entity.*
 import com.pantrywise.domain.model.*
+import com.pantrywise.domain.model.Unit as MeasurementUnit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import java.util.UUID
@@ -84,28 +85,28 @@ class ShoppingRepository @Inject constructor(
         )
     }
 
-    private fun stringToUnit(unitStr: String): Unit {
+    private fun stringToUnit(unitStr: String): MeasurementUnit {
         return when (unitStr.lowercase()) {
-            "lbs", "lb", "pound", "pounds" -> Unit.POUND
-            "oz", "ounce", "ounces" -> Unit.OUNCE
-            "kg", "kilogram", "kilograms" -> Unit.KILOGRAM
-            "g", "gram", "grams" -> Unit.GRAM
-            "ml", "milliliter", "milliliters" -> Unit.MILLILITER
-            "l", "liter", "liters" -> Unit.LITER
-            "cups", "cup" -> Unit.CUP
-            "tbsp", "tablespoon", "tablespoons" -> Unit.TABLESPOON
-            "tsp", "teaspoon", "teaspoons" -> Unit.TEASPOON
-            "gal", "gallon", "gallons" -> Unit.GALLON
-            "each", "item", "items" -> Unit.EACH
-            "bunch" -> Unit.BUNCH
-            "can", "cans" -> Unit.CAN
-            "box", "boxes" -> Unit.BOX
-            "bag", "bags" -> Unit.BAG
-            "bottle", "bottles" -> Unit.BOTTLE
-            "pack", "packs", "package", "packages" -> Unit.PACK
-            "jar", "jars" -> Unit.JAR
-            "cloves", "clove" -> Unit.EACH // Treat cloves as each
-            else -> Unit.EACH
+            "lbs", "lb", "pound", "pounds" -> MeasurementUnit.POUND
+            "oz", "ounce", "ounces" -> MeasurementUnit.OUNCE
+            "kg", "kilogram", "kilograms" -> MeasurementUnit.KILOGRAM
+            "g", "gram", "grams" -> MeasurementUnit.GRAM
+            "ml", "milliliter", "milliliters" -> MeasurementUnit.MILLILITER
+            "l", "liter", "liters" -> MeasurementUnit.LITER
+            "cups", "cup" -> MeasurementUnit.CUP
+            "tbsp", "tablespoon", "tablespoons" -> MeasurementUnit.TABLESPOON
+            "tsp", "teaspoon", "teaspoons" -> MeasurementUnit.TEASPOON
+            "gal", "gallon", "gallons" -> MeasurementUnit.GALLON
+            "each", "item", "items" -> MeasurementUnit.EACH
+            "bunch" -> MeasurementUnit.BUNCH
+            "can", "cans" -> MeasurementUnit.CAN
+            "box", "boxes" -> MeasurementUnit.BOX
+            "bag", "bags" -> MeasurementUnit.BAG
+            "bottle", "bottles" -> MeasurementUnit.BOTTLE
+            "pack", "packs", "package", "packages" -> MeasurementUnit.PACK
+            "jar", "jars" -> MeasurementUnit.JAR
+            "cloves", "clove" -> MeasurementUnit.EACH // Treat cloves as each
+            else -> MeasurementUnit.EACH
         }
     }
 
@@ -121,7 +122,7 @@ class ShoppingRepository @Inject constructor(
         listId: String,
         productId: String,
         quantity: Double,
-        unit: Unit,
+        unit: MeasurementUnit,
         priority: Int = 5,
         reason: String? = null,
         suggestedBy: SourceType? = null
@@ -220,7 +221,7 @@ class ShoppingRepository @Inject constructor(
         sessionId: String,
         productId: String,
         quantity: Double,
-        unit: Unit,
+        unit: MeasurementUnit,
         unitPrice: Double? = null,
         matchType: CartMatchType
     ) {

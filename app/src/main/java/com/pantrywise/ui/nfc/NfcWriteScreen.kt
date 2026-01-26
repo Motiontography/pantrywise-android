@@ -142,7 +142,7 @@ private fun NfcDisabledWriteContent(onOpenSettings: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Icon(
-            imageVector = Icons.Default.NfcOff,
+            imageVector = Icons.Default.Block,
             contentDescription = null,
             modifier = Modifier.size(80.dp),
             tint = MaterialTheme.colorScheme.error
