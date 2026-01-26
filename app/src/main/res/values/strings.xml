@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Pantry Buddy</string>
+
+    <!-- Navigation -->
+    <string name="nav_pantry">Pantry</string>
+    <string name="nav_shopping">Shopping</string>
+    <string name="nav_recipes">Recipes</string>
+    <string name="nav_spending">Spending</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Pantry -->
+    <string name="pantry_empty">Your pantry is empty</string>
+    <string name="pantry_add_first">Scan a barcode or add items manually to get started</string>
+    <string name="search_pantry">Search pantry…</string>
+    <string name="filter_all">All</string>
+    <string name="filter_expiring">Expiring</string>
+    <string name="filter_low_stock">Low Stock</string>
+
+    <!-- Shopping -->
+    <string name="shopping_list">Shopping List</string>
+    <string name="shopping_empty">No items on your list</string>
+    <string name="add_item">Add Item</string>
+    <string name="start_shopping">Start Shopping</string>
+
+    <!-- Recipes -->
+    <string name="recipes_title">Recipes</string>
+    <string name="ai_recipe_search">AI Recipe Search</string>
+    <string name="meal_plan">Meal Plan</string>
+    <string name="recipe_library">Library</string>
+
+    <!-- Essentials -->
+    <string name="essentials_title">Essentials</string>
+    <string name="essentials_empty">No essentials yet</string>
+    <string name="essentials_description">Add items your household must always have, like potatoes, onions, or garlic.</string>
+    <string name="add_essential">Add Essential</string>
+
+    <!-- AI Recipe -->
+    <string name="ai_recipe_title">AI Recipe Discovery</string>
+    <string name="ai_recipe_subtitle">Tell me what you want to make and I\'ll give you a complete recipe with a shopping list</string>
+    <string name="search_recipe_hint">What do you want to make?</string>
+    <string name="find_recipe">Find Recipe</string>
+    <string name="create_shopping_list">Create Shopping List</string>
+    <string name="save_recipe">Save Recipe</string>
+
+    <!-- Household -->
+    <string name="household_title">Household</string>
+    <string name="household_members">Members</string>
+    <string name="invite_member">Invite Member</string>
+    <string name="leave_household">Leave Household</string>
+    <string name="no_household">No Household Yet</string>
+    <string name="household_description">Create a household to share your pantry and shopping lists with family members.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="account">Account</string>
+    <string name="notifications">Notifications</string>
+    <string name="storage_locations">Storage Locations</string>
+    <string name="categories">Categories</string>
+    <string name="export_data">Export Data</string>
+    <string name="about">About</string>
+
+    <!-- Common -->
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="done">Done</string>
+    <string name="ok">OK</string>
+    <string name="loading">Loading…</string>
+    <string name="error">Error</string>
+    <string name="retry">Retry</string>
+
+    <!-- Permissions -->
+    <string name="camera_permission_title">Camera Permission Required</string>
+    <string name="camera_permission_message">My Pantry Buddy needs camera access to scan barcodes</string>
+    <string name="nfc_permission_title">NFC Permission Required</string>
+    <string name="nfc_permission_message">My Pantry Buddy uses NFC to quickly identify pantry items</string>
+    <string name="location_permission_title">Location Permission Required</string>
+    <string name="location_permission_message">My Pantry Buddy uses your location to remind you when near your favorite stores</string>
+
+    <!-- Widgets -->
+    <string name="widget_shopping_description">Shows your shopping list items</string>
+    <string name="widget_expiring_description">Shows items expiring soon</string>
+    <string name="widget_shopping_title">Shopping List</string>
+    <string name="widget_expiring_title">Expiring Soon</string>
+    <string name="widget_no_items">No items</string>
+    <string name="widget_tap_to_open">Tap to open app</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_expiring">Expiration Alerts</string>
+    <string name="notification_channel_expiring_desc">Alerts when items are about to expire</string>
+    <string name="notification_channel_low_stock">Low Stock Alerts</string>
+    <string name="notification_channel_low_stock_desc">Alerts when essentials are running low</string>
+    <string name="notification_channel_shopping">Shopping Reminders</string>
+    <string name="notification_channel_shopping_desc">Reminders when near your favorite stores</string>
+    <string name="notification_channel_household">Household Updates</string>
+    <string name="notification_channel_household_desc">Updates from your household members</string>
+
+    <!-- Budget -->
+    <string name="budget_title">Budget</string>
+    <string name="budget_monthly">Monthly Budget</string>
+    <string name="budget_weekly">Weekly Budget</string>
+    <string name="budget_remaining">Remaining</string>
+    <string name="budget_spent">Spent</string>
+    <string name="budget_over">Over budget</string>
+    <string name="set_budget">Set Budget</string>
+
+    <!-- NFC -->
+    <string name="nfc_tap_to_scan">Tap NFC tag to scan</string>
+    <string name="nfc_write_success">Tag written successfully</string>
+    <string name="nfc_read_success">Tag read successfully</string>
+    <string name="nfc_error">NFC error occurred</string>
+    <string name="nfc_not_supported">NFC not supported on this device</string>
+
+    <!-- Meal Plan -->
+    <string name="meal_plan_title">Meal Plan</string>
+    <string name="meal_plan_breakfast">Breakfast</string>
+    <string name="meal_plan_lunch">Lunch</string>
+    <string name="meal_plan_dinner">Dinner</string>
+    <string name="meal_plan_snack">Snack</string>
+    <string name="meal_plan_add">Add Meal</string>
+    <string name="meal_plan_empty">No meals planned</string>
+</resources>

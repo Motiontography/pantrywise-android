@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="#FFFFFF">
+    <!-- Shopping basket / pantry icon -->
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M5.5,21C4.67,21 4,20.33 4,19.5C4,18.67 4.67,18 5.5,18C6.33,18 7,18.67 7,19.5C7,20.33 6.33,21 5.5,21ZM18.5,21C17.67,21 17,20.33 17,19.5C17,18.67 17.67,18 18.5,18C19.33,18 20,18.67 20,19.5C20,20.33 19.33,21 18.5,21ZM5.55,5L7.19,12H17.03L19,5H5.55ZM3,4H3.58C4.16,4 4.66,4.38 4.81,4.93L5.11,6H20C20.55,6 21,6.45 21,7C21,7.14 20.97,7.28 20.92,7.41L18.47,13.59C18.18,14.43 17.41,15 16.53,15H7.53C6.65,15 5.88,14.43 5.59,13.59L3.22,5.43L2.12,2H0V0H3.27L3,4Z" />
+</vector>

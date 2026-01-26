@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Pantry Buddy</string>
+    <string name="shopping_list">Shopping</string>
+    <string name="expiring_items">Expiring</string>
+    <string name="quick_add">Quick Add</string>
+    <string name="items_to_get">items to get</string>
+    <string name="all_done">All done!</string>
+    <string name="nothing_expiring">Nothing expiring</string>
+    <string name="items_expiring">items expiring</string>
+    <string name="voice_or_presets">Voice or presets</string>
+    <string name="syncing">Syncing...</string>
+    <string name="last_synced">Last synced: %s</string>
+    <string name="tap_to_sync">Tap to sync</string>
+</resources>
