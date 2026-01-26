@@ -133,6 +133,28 @@
                 android:resource="@xml/expiring_items_widget_info" />
         </receiver>
 
+        <receiver
+            android:name=".widgets.WasteTrackingWidgetReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/waste_tracking_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.NutritionSummaryWidgetReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/nutrition_summary_widget_info" />
+        </receiver>
+
         <!-- Boot receiver for rescheduling notifications -->
         <receiver
             android:name=".receivers.BootReceiver"

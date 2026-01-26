@@ -25,6 +25,12 @@ import com.pantrywise.domain.usecase.ExportFormat
 fun SettingsScreen(
     onNavigateToHousehold: () -> Unit = {},
     onNavigateToApiKeySettings: () -> Unit = {},
+    onNavigateToPriceBook: () -> Unit = {},
+    onNavigateToWasteDashboard: () -> Unit = {},
+    onNavigateToNutrition: () -> Unit = {},
+    onNavigateToCalendarSettings: () -> Unit = {},
+    onNavigateToAudit: () -> Unit = {},
+    onNavigateToStoreManagement: () -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -85,6 +91,71 @@ fun SettingsScreen(
                     title = "API Keys",
                     subtitle = "Configure OpenAI for AI features",
                     onClick = onNavigateToApiKeySettings
+                )
+            }
+
+            // Features section
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    "Features",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
+            }
+
+            item {
+                SettingsItem(
+                    icon = Icons.Default.TrendingUp,
+                    title = "Price Book",
+                    subtitle = "Track and compare prices across stores",
+                    onClick = onNavigateToPriceBook
+                )
+            }
+
+            item {
+                SettingsItem(
+                    icon = Icons.Default.Delete,
+                    title = "Waste Tracking",
+                    subtitle = "Monitor and reduce food waste",
+                    onClick = onNavigateToWasteDashboard
+                )
+            }
+
+            item {
+                SettingsItem(
+                    icon = Icons.Default.Favorite,
+                    title = "Nutrition & Health",
+                    subtitle = "Track nutrition and Health Connect sync",
+                    onClick = onNavigateToNutrition
+                )
+            }
+
+            item {
+                SettingsItem(
+                    icon = Icons.Default.CalendarMonth,
+                    title = "Calendar Sync",
+                    subtitle = "Sync expirations and meal plans to calendar",
+                    onClick = onNavigateToCalendarSettings
+                )
+            }
+
+            item {
+                SettingsItem(
+                    icon = Icons.Default.Inventory,
+                    title = "Inventory Audit",
+                    subtitle = "Verify and reconcile inventory counts",
+                    onClick = onNavigateToAudit
+                )
+            }
+
+            item {
+                SettingsItem(
+                    icon = Icons.Default.Store,
+                    title = "Store Management",
+                    subtitle = "Manage stores and aisle mappings",
+                    onClick = onNavigateToStoreManagement
                 )
             }
 

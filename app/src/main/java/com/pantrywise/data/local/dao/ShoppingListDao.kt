@@ -44,6 +44,9 @@ interface ShoppingListDao {
     suspend fun deleteShoppingListById(id: String)
 
     // Shopping List Items
+    @Query("SELECT * FROM shopping_list_items ORDER BY createdAt DESC")
+    fun getAllShoppingListItems(): Flow<List<ShoppingListItemEntity>>
+
     @Query("SELECT * FROM shopping_list_items WHERE listId = :listId ORDER BY priority DESC, createdAt DESC")
     fun getItemsByListId(listId: String): Flow<List<ShoppingListItemEntity>>
 

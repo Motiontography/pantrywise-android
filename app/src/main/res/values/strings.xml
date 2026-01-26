@@ -86,6 +86,8 @@
     <string name="widget_expiring_title">Expiring Soon</string>
     <string name="widget_no_items">No items</string>
     <string name="widget_tap_to_open">Tap to open app</string>
+    <string name="waste_widget_description">Track your monthly food waste</string>
+    <string name="nutrition_widget_description">Monitor your daily nutrition intake</string>
 
     <!-- Notifications -->
     <string name="notification_channel_expiring">Expiration Alerts</string>

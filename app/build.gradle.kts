@@ -102,6 +102,13 @@ dependencies {
     // ML Kit Barcode Scanning
     implementation("com.google.mlkit:barcode-scanning:17.2.0")
 
+    // ML Kit Text Recognition (for receipt/label scanning)
+    implementation("com.google.mlkit:text-recognition:16.0.0")
+
+    // Charts (for analytics dashboards)
+    implementation("com.patrykandpatrick.vico:compose:1.13.1")
+    implementation("com.patrykandpatrick.vico:compose-m3:1.13.1")
+
     // Coil for image loading
     implementation("io.coil-kt:coil-compose:2.5.0")
 
@@ -145,6 +152,9 @@ dependencies {
 
     // Security Crypto (for API key storage)
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
+
+    // Health Connect for nutrition tracking
+    implementation("androidx.health.connect:connect-client:1.1.0-alpha07")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

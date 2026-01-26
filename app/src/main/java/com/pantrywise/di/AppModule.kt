@@ -84,6 +84,55 @@ object AppModule {
         return database.budgetTargetDao()
     }
 
+    // Phase 1: New DAOs
+    @Provides
+    @Singleton
+    fun provideStoreDao(database: PantryDatabase): StoreDao {
+        return database.storeDao()
+    }
+
+    @Provides
+    @Singleton
+    fun providePriceDao(database: PantryDatabase): PriceDao {
+        return database.priceDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWasteDao(database: PantryDatabase): WasteDao {
+        return database.wasteDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuditDao(database: PantryDatabase): AuditDao {
+        return database.auditDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNutritionDao(database: PantryDatabase): NutritionDao {
+        return database.nutritionDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideReceiptDao(database: PantryDatabase): ReceiptDao {
+        return database.receiptDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideExpirationPatternDao(database: PantryDatabase): ExpirationPatternDao {
+        return database.expirationPatternDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCalendarEventDao(database: PantryDatabase): CalendarEventDao {
+        return database.calendarEventDao()
+    }
+
     // Network
     @Provides
     @Singleton

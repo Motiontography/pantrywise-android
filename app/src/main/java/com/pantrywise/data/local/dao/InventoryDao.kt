@@ -73,4 +73,20 @@ interface InventoryDao {
 
     @Query("SELECT COUNT(*) FROM inventory_items WHERE location = :location")
     suspend fun getInventoryItemCountByLocation(location: LocationType): Int
+
+    // Additional methods for audit functionality
+    @Query("SELECT * FROM inventory_items WHERE id = :id")
+    suspend fun getItemById(id: String): InventoryItemEntity?
+
+    @Update
+    suspend fun updateItem(item: InventoryItemEntity)
+
+    @Query("DELETE FROM inventory_items WHERE id = :id")
+    suspend fun deleteItemById(id: String)
+
+    @Query("SELECT * FROM inventory_items")
+    suspend fun getAllItemsSnapshot(): List<InventoryItemEntity>
+
+    @Query("SELECT * FROM inventory_items WHERE location = :location")
+    suspend fun getItemsByLocation(location: String): List<InventoryItemEntity>
 }

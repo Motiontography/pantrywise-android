@@ -26,11 +26,21 @@ import com.pantrywise.ui.recipes.RecipeInputScreen
 import com.pantrywise.ui.recipes.AIRecipeSearchScreen
 import com.pantrywise.ui.finance.SpendingSummaryScreen
 import com.pantrywise.ui.settings.SettingsScreen
+import com.pantrywise.ui.settings.CalendarSettingsScreen
 import com.pantrywise.ui.staples.StaplesScreen
 import com.pantrywise.ui.household.HouseholdScreen
 import com.pantrywise.ui.nfc.NfcScanScreen
 import com.pantrywise.ui.nfc.NfcWriteScreen
 import com.pantrywise.ui.mealplan.MealPlanScreen
+import com.pantrywise.ui.price.PriceHistoryScreen
+import com.pantrywise.ui.price.PriceBookScreen
+import com.pantrywise.ui.waste.WasteDashboardScreen
+import com.pantrywise.ui.health.NutritionDashboardScreen
+import com.pantrywise.ui.health.FoodLogScreen
+import com.pantrywise.ui.health.DailyGoalsSettingsScreen
+import com.pantrywise.ui.audit.AuditSessionScreen
+import com.pantrywise.ui.stores.StoreManagementScreen
+import com.pantrywise.ui.stores.AisleMappingScreen
 
 sealed class Screen(
     val route: String,
@@ -90,6 +100,18 @@ object Routes {
     const val NFC_SCAN = "nfc_scan"
     const val NFC_WRITE = "nfc_write/{productId}?productName={productName}&barcode={barcode}"
 
+    // Phase 5-6: New feature routes
+    const val PRICE_HISTORY = "price_history/{productId}?productName={productName}"
+    const val PRICE_BOOK = "price_book"
+    const val WASTE_DASHBOARD = "waste_dashboard"
+    const val NUTRITION_DASHBOARD = "nutrition_dashboard"
+    const val FOOD_LOG = "food_log"
+    const val DAILY_GOALS = "daily_goals"
+    const val CALENDAR_SETTINGS = "calendar_settings"
+    const val AUDIT_SESSION = "audit_session"
+    const val STORE_MANAGEMENT = "store_management"
+    const val AISLE_MAPPING = "aisle_mapping/{storeId}"
+
     fun shoppingSession(sessionId: String) = "shopping_session/$sessionId"
     fun reconciliation(sessionId: String) = "reconciliation/$sessionId"
     fun scanner(context: String? = null) = "scanner?context=${context ?: ""}"
@@ -100,6 +122,13 @@ object Routes {
         barcode?.let { params.add("barcode=$it") }
         return if (params.isNotEmpty()) "$base?${params.joinToString("&")}" else base
     }
+
+    fun priceHistory(productId: String, productName: String? = null): String {
+        val encodedName = productName?.let { java.net.URLEncoder.encode(it, "UTF-8") } ?: ""
+        return "price_history/$productId?productName=$encodedName"
+    }
+
+    fun aisleMapping(storeId: String) = "aisle_mapping/$storeId"
 }
 
 val bottomNavItems = listOf(
@@ -238,7 +267,13 @@ fun PantryNavHost(
             composable(Routes.SETTINGS) {
                 SettingsScreen(
                     onNavigateToHousehold = { navController.navigate(Routes.HOUSEHOLD) },
-                    onNavigateToApiKeySettings = { /* TODO: Navigate to API key settings */ }
+                    onNavigateToApiKeySettings = { /* TODO: Navigate to API key settings */ },
+                    onNavigateToPriceBook = { navController.navigate(Routes.PRICE_BOOK) },
+                    onNavigateToWasteDashboard = { navController.navigate(Routes.WASTE_DASHBOARD) },
+                    onNavigateToNutrition = { navController.navigate(Routes.NUTRITION_DASHBOARD) },
+                    onNavigateToCalendarSettings = { navController.navigate(Routes.CALENDAR_SETTINGS) },
+                    onNavigateToAudit = { navController.navigate(Routes.AUDIT_SESSION) },
+                    onNavigateToStoreManagement = { navController.navigate(Routes.STORE_MANAGEMENT) }
                 )
             }
 
@@ -313,6 +348,97 @@ fun PantryNavHost(
                     barcode = barcode,
                     onNavigateBack = { navController.popBackStack() },
                     onWriteSuccess = { navController.popBackStack() }
+                )
+            }
+
+            // Phase 5-6: New feature screens
+            composable(
+                route = Routes.PRICE_HISTORY,
+                arguments = listOf(
+                    navArgument("productId") { type = NavType.StringType },
+                    navArgument("productName") {
+                        type = NavType.StringType
+                        nullable = true
+                        defaultValue = null
+                    }
+                )
+            ) { backStackEntry ->
+                val productId = backStackEntry.arguments?.getString("productId") ?: return@composable
+                val productName = backStackEntry.arguments?.getString("productName") ?: "Product"
+
+                PriceHistoryScreen(
+                    productId = productId,
+                    productName = productName,
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+
+            composable(Routes.PRICE_BOOK) {
+                PriceBookScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onProductClick = { productId, productName ->
+                        navController.navigate(Routes.priceHistory(productId, productName))
+                    }
+                )
+            }
+
+            composable(Routes.WASTE_DASHBOARD) {
+                WasteDashboardScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onLogWaste = { /* Handle waste logging */ }
+                )
+            }
+
+            composable(Routes.NUTRITION_DASHBOARD) {
+                NutritionDashboardScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToFoodLog = { navController.navigate(Routes.FOOD_LOG) },
+                    onNavigateToGoals = { navController.navigate(Routes.DAILY_GOALS) }
+                )
+            }
+
+            composable(Routes.FOOD_LOG) {
+                FoodLogScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToProductSearch = { /* Navigate to product search */ }
+                )
+            }
+
+            composable(Routes.DAILY_GOALS) {
+                DailyGoalsSettingsScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+
+            composable(Routes.CALENDAR_SETTINGS) {
+                CalendarSettingsScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+
+            composable(Routes.AUDIT_SESSION) {
+                AuditSessionScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+
+            composable(Routes.STORE_MANAGEMENT) {
+                StoreManagementScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToAisleMapping = { storeId ->
+                        navController.navigate(Routes.aisleMapping(storeId))
+                    }
+                )
+            }
+
+            composable(
+                route = Routes.AISLE_MAPPING,
+                arguments = listOf(navArgument("storeId") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val storeId = backStackEntry.arguments?.getString("storeId") ?: return@composable
+                AisleMappingScreen(
+                    storeId = storeId,
+                    onNavigateBack = { navController.popBackStack() }
                 )
             }
         }

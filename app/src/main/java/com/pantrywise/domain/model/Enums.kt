@@ -50,7 +50,10 @@ enum class SourceType {
     OPEN_FOOD_FACTS,
     SUGGESTION,
     RECIPE_PARSE,
-    AI_SUGGESTION
+    AI_SUGGESTION,
+    AI_VISION,
+    RECEIPT_SCAN,
+    SMART_SHELF_SNAP
 }
 
 enum class LocationType(val displayName: String, val icon: String) {
