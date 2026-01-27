@@ -150,4 +150,10 @@ class ShoppingViewModel @Inject constructor(
     fun clearError() {
         _uiState.update { it.copy(error = null) }
     }
+
+    fun deleteShoppingList(listId: String) {
+        viewModelScope.launch {
+            shoppingRepository.deleteShoppingList(listId)
+        }
+    }
 }

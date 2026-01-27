@@ -28,6 +28,8 @@ fun ShoppingListScreen(
     val uiState by viewModel.uiState.collectAsState()
     val scope = rememberCoroutineScope()
     var showStoreDialog by remember { mutableStateOf(false) }
+    var showDeleteConfirmation by remember { mutableStateOf(false) }
+    var showMoreMenu by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -36,6 +38,32 @@ fun ShoppingListScreen(
                 actions = {
                     IconButton(onClick = onNavigateToScanner) {
                         Icon(Icons.Default.QrCodeScanner, contentDescription = "Scan")
+                    }
+                    Box {
+                        IconButton(onClick = { showMoreMenu = true }) {
+                            Icon(Icons.Default.MoreVert, contentDescription = "More options")
+                        }
+                        DropdownMenu(
+                            expanded = showMoreMenu,
+                            onDismissRequest = { showMoreMenu = false }
+                        ) {
+                            if (uiState.activeList != null) {
+                                DropdownMenuItem(
+                                    text = { Text("Delete List") },
+                                    onClick = {
+                                        showMoreMenu = false
+                                        showDeleteConfirmation = true
+                                    },
+                                    leadingIcon = {
+                                        Icon(
+                                            Icons.Default.Delete,
+                                            contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.error
+                                        )
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
             )
@@ -182,6 +210,34 @@ fun ShoppingListScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showStoreDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
+    // Delete confirmation dialog
+    if (showDeleteConfirmation) {
+        AlertDialog(
+            onDismissRequest = { showDeleteConfirmation = false },
+            title = { Text("Delete List?") },
+            text = {
+                Text("Are you sure you want to delete \"${uiState.activeList?.name}\"? This cannot be undone.")
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        uiState.activeList?.let { list ->
+                            viewModel.deleteShoppingList(list.id)
+                        }
+                        showDeleteConfirmation = false
+                    }
+                ) {
+                    Text("Delete", color = MaterialTheme.colorScheme.error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteConfirmation = false }) {
                     Text("Cancel")
                 }
             }
