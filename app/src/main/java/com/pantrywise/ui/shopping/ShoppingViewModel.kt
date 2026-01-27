@@ -23,6 +23,7 @@ data class ShoppingListUiState(
     val isLoading: Boolean = true,
     val shoppingLists: List<ShoppingListEntity> = emptyList(),
     val activeList: ShoppingListEntity? = null,
+    val archivedLists: List<ShoppingListEntity> = emptyList(),
     val items: List<ShoppingListItemWithProduct> = emptyList(),
     val suggestions: List<ShoppingSuggestion> = emptyList(),
     val hasActiveSession: Boolean = false,
@@ -41,7 +42,9 @@ class ShoppingViewModel @Inject constructor(
 
     init {
         loadShoppingLists()
+        loadArchivedLists()
         checkActiveSession()
+        cleanupOldArchivedLists()
     }
 
     private fun loadShoppingLists() {
@@ -154,6 +157,23 @@ class ShoppingViewModel @Inject constructor(
     fun deleteShoppingList(listId: String) {
         viewModelScope.launch {
             shoppingRepository.deleteShoppingList(listId)
+            loadArchivedLists() // Refresh archived lists
+        }
+    }
+
+    private fun loadArchivedLists() {
+        viewModelScope.launch {
+            shoppingRepository.getArchivedShoppingLists()
+                .collect { lists ->
+                    _uiState.update { it.copy(archivedLists = lists) }
+                }
+        }
+    }
+
+    private fun cleanupOldArchivedLists() {
+        viewModelScope.launch {
+            val thirtyDaysAgo = System.currentTimeMillis() - (30L * 24 * 60 * 60 * 1000)
+            shoppingRepository.deleteArchivedListsOlderThan(thirtyDaysAgo)
         }
     }
 }

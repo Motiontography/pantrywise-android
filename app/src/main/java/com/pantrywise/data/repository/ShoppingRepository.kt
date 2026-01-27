@@ -114,6 +114,10 @@ class ShoppingRepository @Inject constructor(
 
     suspend fun deleteShoppingList(id: String) = shoppingListDao.deleteShoppingListById(id)
 
+    fun getArchivedShoppingLists(): Flow<List<ShoppingListEntity>> = shoppingListDao.getArchivedShoppingLists()
+
+    suspend fun deleteArchivedListsOlderThan(timestamp: Long) = shoppingListDao.deleteArchivedListsOlderThan(timestamp)
+
     // Shopping List Items
     fun getItemsByListId(listId: String): Flow<List<ShoppingListItemEntity>> =
         shoppingListDao.getItemsByListId(listId)
@@ -398,6 +402,22 @@ class ShoppingRepository @Inject constructor(
             SessionStatus.COMPLETED,
             completedAt = System.currentTimeMillis()
         )
+
+        // Archive the shopping list
+        if (listId != null) {
+            val list = shoppingListDao.getShoppingListById(listId)
+            if (list != null) {
+                val archivedList = list.copy(
+                    isActive = false,
+                    isArchived = true,
+                    archivedAt = System.currentTimeMillis(),
+                    completedStore = session.store,
+                    completedTotal = total,
+                    updatedAt = System.currentTimeMillis()
+                )
+                shoppingListDao.updateShoppingList(archivedList)
+            }
+        }
 
         // Log event
         preferencesDao.insertActionEvent(

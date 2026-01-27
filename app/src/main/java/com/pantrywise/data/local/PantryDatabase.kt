@@ -54,7 +54,7 @@ import java.util.UUID
         CalendarEventEntity::class,
         CalendarSettingsEntity::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
@@ -568,6 +568,16 @@ abstract class PantryDatabase : RoomDatabase() {
             }
         }
 
+        // Migration from version 5 to 6: Add shopping list archive fields
+        private val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE shopping_lists ADD COLUMN isArchived INTEGER NOT NULL DEFAULT 0")
+                database.execSQL("ALTER TABLE shopping_lists ADD COLUMN archivedAt INTEGER")
+                database.execSQL("ALTER TABLE shopping_lists ADD COLUMN completedStore TEXT")
+                database.execSQL("ALTER TABLE shopping_lists ADD COLUMN completedTotal REAL")
+            }
+        }
+
         fun getInstance(context: Context): PantryDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -575,7 +585,7 @@ abstract class PantryDatabase : RoomDatabase() {
                     PantryDatabase::class.java,
                     "pantrywise_database"
                 )
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
                     .addCallback(DatabaseCallback())
                     .build()
                 INSTANCE = instance

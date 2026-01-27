@@ -16,6 +16,10 @@ data class ShoppingListEntity(
     val id: String = UUID.randomUUID().toString(),
     val name: String = "Shopping List",
     val isActive: Boolean = true,
+    val isArchived: Boolean = false,
+    val archivedAt: Long? = null,
+    val completedStore: String? = null,
+    val completedTotal: Double? = null,
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )

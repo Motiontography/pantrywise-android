@@ -10,8 +10,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ShoppingListDao {
     // Shopping Lists
-    @Query("SELECT * FROM shopping_lists ORDER BY updatedAt DESC")
+    @Query("SELECT * FROM shopping_lists WHERE isArchived = 0 ORDER BY updatedAt DESC")
     fun getAllShoppingLists(): Flow<List<ShoppingListEntity>>
+
+    @Query("SELECT * FROM shopping_lists WHERE isArchived = 1 ORDER BY archivedAt DESC")
+    fun getArchivedShoppingLists(): Flow<List<ShoppingListEntity>>
+
+    @Query("DELETE FROM shopping_lists WHERE isArchived = 1 AND archivedAt < :timestamp")
+    suspend fun deleteArchivedListsOlderThan(timestamp: Long)
 
     @Query("SELECT * FROM shopping_lists WHERE id = :id")
     suspend fun getShoppingListById(id: String): ShoppingListEntity?
