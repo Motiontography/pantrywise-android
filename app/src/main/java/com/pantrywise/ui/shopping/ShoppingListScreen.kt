@@ -46,6 +46,9 @@ fun ShoppingListScreen(
     var listToDelete by remember { mutableStateOf<ShoppingListEntity?>(null) }
     var showHistoryDeleteConfirmation by remember { mutableStateOf(false) }
 
+    // Voice input state
+    var showVoiceInput by remember { mutableStateOf(false) }
+
     // Group archived lists by week
     val groupedHistory = remember(uiState.archivedLists) {
         groupListsByWeek(uiState.archivedLists)
@@ -56,6 +59,9 @@ fun ShoppingListScreen(
             TopAppBar(
                 title = { Text(uiState.activeList?.name ?: "Shopping List") },
                 actions = {
+                    IconButton(onClick = { showVoiceInput = true }) {
+                        Icon(Icons.Default.Mic, contentDescription = "Voice input")
+                    }
                     IconButton(onClick = onNavigateToScanner) {
                         Icon(Icons.Default.QrCodeScanner, contentDescription = "Scan")
                     }
@@ -349,6 +355,18 @@ fun ShoppingListScreen(
                 ) {
                     Text("Cancel")
                 }
+            }
+        )
+    }
+
+    // Voice input sheet
+    if (showVoiceInput && uiState.activeList != null) {
+        VoiceInputSheet(
+            listId = uiState.activeList!!.id,
+            onDismiss = { showVoiceInput = false },
+            onItemsAdded = { count ->
+                showVoiceInput = false
+                // Data auto-updates via Flow
             }
         )
     }

@@ -21,10 +21,15 @@ fun BarcodeScannerScreen(
     scanContext: String?,
     onProductScanned: (String) -> Unit,
     onNavigateBack: () -> Unit,
+    onNavigateToAICamera: () -> Unit = {},
+    onNavigateToSmartShelf: () -> Unit = {},
+    onNavigateToExpirationScanner: () -> Unit = {},
+    onNavigateToNutritionScanner: () -> Unit = {},
     viewModel: ScannerViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showAddToInventoryDialog by remember { mutableStateOf(false) }
+    var showScanModeMenu by remember { mutableStateOf(false) }
 
     LaunchedEffect(uiState.event) {
         when (val event = uiState.event) {
@@ -45,6 +50,58 @@ fun BarcodeScannerScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                actions = {
+                    Box {
+                        IconButton(onClick = { showScanModeMenu = true }) {
+                            Icon(Icons.Default.MoreVert, contentDescription = "More options")
+                        }
+                        DropdownMenu(
+                            expanded = showScanModeMenu,
+                            onDismissRequest = { showScanModeMenu = false }
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text("AI Product Camera") },
+                                onClick = {
+                                    showScanModeMenu = false
+                                    onNavigateToAICamera()
+                                },
+                                leadingIcon = {
+                                    Icon(Icons.Default.CameraAlt, contentDescription = null)
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Smart Shelf Snap") },
+                                onClick = {
+                                    showScanModeMenu = false
+                                    onNavigateToSmartShelf()
+                                },
+                                leadingIcon = {
+                                    Icon(Icons.Default.Storefront, contentDescription = null)
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Scan Expiration Date") },
+                                onClick = {
+                                    showScanModeMenu = false
+                                    onNavigateToExpirationScanner()
+                                },
+                                leadingIcon = {
+                                    Icon(Icons.Default.Event, contentDescription = null)
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Scan Nutrition Label") },
+                                onClick = {
+                                    showScanModeMenu = false
+                                    onNavigateToNutritionScanner()
+                                },
+                                leadingIcon = {
+                                    Icon(Icons.Default.Restaurant, contentDescription = null)
+                                }
+                            )
+                        }
                     }
                 }
             )

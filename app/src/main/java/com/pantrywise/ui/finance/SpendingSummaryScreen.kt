@@ -28,6 +28,7 @@ import java.util.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SpendingSummaryScreen(
+    onNavigateToReceiptScanner: () -> Unit = {},
     viewModel: FinanceViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -37,6 +38,9 @@ fun SpendingSummaryScreen(
             TopAppBar(
                 title = { Text("Spending") },
                 actions = {
+                    IconButton(onClick = onNavigateToReceiptScanner) {
+                        Icon(Icons.Default.DocumentScanner, contentDescription = "Scan Receipt")
+                    }
                     IconButton(onClick = { viewModel.showBudgetSetup() }) {
                         Icon(Icons.Default.Savings, contentDescription = "Budget")
                     }

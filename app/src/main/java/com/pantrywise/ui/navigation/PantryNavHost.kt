@@ -22,6 +22,11 @@ import com.pantrywise.ui.shopping.ShoppingListScreen
 import com.pantrywise.ui.shopping.ShoppingSessionScreen
 import com.pantrywise.ui.shopping.ReconciliationScreen
 import com.pantrywise.ui.scanner.BarcodeScannerScreen
+import com.pantrywise.ui.scanner.ReceiptScannerScreen
+import com.pantrywise.ui.scanner.ExpirationDateScannerScreen
+import com.pantrywise.ui.scanner.AIProductCameraScreen
+import com.pantrywise.ui.scanner.SmartShelfSnapScreen
+import com.pantrywise.ui.scanner.NutritionScannerScreen
 import com.pantrywise.ui.recipes.RecipeInputScreen
 import com.pantrywise.ui.recipes.AIRecipeSearchScreen
 import com.pantrywise.ui.finance.SpendingSummaryScreen
@@ -112,6 +117,13 @@ object Routes {
     const val STORE_MANAGEMENT = "store_management"
     const val AISLE_MAPPING = "aisle_mapping/{storeId}"
 
+    // Scanner routes
+    const val RECEIPT_SCANNER = "receipt_scanner"
+    const val EXPIRATION_SCANNER = "expiration_scanner?inventoryItemId={inventoryItemId}"
+    const val AI_PRODUCT_CAMERA = "ai_product_camera"
+    const val SMART_SHELF_SNAP = "smart_shelf_snap"
+    const val NUTRITION_SCANNER = "nutrition_scanner?productId={productId}&productName={productName}"
+
     fun shoppingSession(sessionId: String) = "shopping_session/$sessionId"
     fun reconciliation(sessionId: String) = "reconciliation/$sessionId"
     fun scanner(context: String? = null) = "scanner?context=${context ?: ""}"
@@ -129,6 +141,14 @@ object Routes {
     }
 
     fun aisleMapping(storeId: String) = "aisle_mapping/$storeId"
+
+    fun expirationScanner(inventoryItemId: String? = null) =
+        "expiration_scanner?inventoryItemId=${inventoryItemId ?: ""}"
+
+    fun nutritionScanner(productId: String? = null, productName: String? = null): String {
+        val encodedName = productName?.let { java.net.URLEncoder.encode(it, "UTF-8") } ?: ""
+        return "nutrition_scanner?productId=${productId ?: ""}&productName=$encodedName"
+    }
 }
 
 val bottomNavItems = listOf(
@@ -249,7 +269,11 @@ fun PantryNavHost(
                         // Handle scanned product based on context
                         navController.popBackStack()
                     },
-                    onNavigateBack = { navController.popBackStack() }
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToAICamera = { navController.navigate(Routes.AI_PRODUCT_CAMERA) },
+                    onNavigateToSmartShelf = { navController.navigate(Routes.SMART_SHELF_SNAP) },
+                    onNavigateToExpirationScanner = { navController.navigate(Routes.expirationScanner()) },
+                    onNavigateToNutritionScanner = { navController.navigate(Routes.nutritionScanner()) }
                 )
             }
 
@@ -261,7 +285,9 @@ fun PantryNavHost(
             }
 
             composable(Routes.SPENDING) {
-                SpendingSummaryScreen()
+                SpendingSummaryScreen(
+                    onNavigateToReceiptScanner = { navController.navigate(Routes.RECEIPT_SCANNER) }
+                )
             }
 
             composable(Routes.SETTINGS) {
@@ -439,6 +465,79 @@ fun PantryNavHost(
                 AisleMappingScreen(
                     storeId = storeId,
                     onNavigateBack = { navController.popBackStack() }
+                )
+            }
+
+            // Scanner screens
+            composable(Routes.RECEIPT_SCANNER) {
+                ReceiptScannerScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+
+            composable(
+                route = Routes.EXPIRATION_SCANNER,
+                arguments = listOf(
+                    navArgument("inventoryItemId") {
+                        type = NavType.StringType
+                        nullable = true
+                        defaultValue = null
+                    }
+                )
+            ) { backStackEntry ->
+                val inventoryItemId = backStackEntry.arguments?.getString("inventoryItemId")
+                ExpirationDateScannerScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onDateSelected = { date ->
+                        // Pass date back through SavedStateHandle or navigation result
+                        navController.popBackStack()
+                    }
+                )
+            }
+
+            composable(Routes.AI_PRODUCT_CAMERA) {
+                AIProductCameraScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onProductSaved = { product ->
+                        // Navigate back after product is saved
+                        navController.popBackStack()
+                    }
+                )
+            }
+
+            composable(Routes.SMART_SHELF_SNAP) {
+                SmartShelfSnapScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onProductSaved = { product ->
+                        navController.popBackStack()
+                    }
+                )
+            }
+
+            composable(
+                route = Routes.NUTRITION_SCANNER,
+                arguments = listOf(
+                    navArgument("productId") {
+                        type = NavType.StringType
+                        nullable = true
+                        defaultValue = null
+                    },
+                    navArgument("productName") {
+                        type = NavType.StringType
+                        nullable = true
+                        defaultValue = null
+                    }
+                )
+            ) { backStackEntry ->
+                val productId = backStackEntry.arguments?.getString("productId")
+                val productName = backStackEntry.arguments?.getString("productName")
+                NutritionScannerScreen(
+                    productId = productId,
+                    productName = productName,
+                    onNavigateBack = { navController.popBackStack() },
+                    onNutritionSaved = { nutrition ->
+                        navController.popBackStack()
+                    }
                 )
             }
         }
