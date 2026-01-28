@@ -2,6 +2,7 @@ package com.pantrywise.ui.pantry
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -175,22 +176,26 @@ fun LocationFilterChips(
     selectedLocation: LocationType?,
     onLocationSelected: (LocationType?) -> Unit
 ) {
-    Row(
+    LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(vertical = 8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        FilterChip(
-            selected = selectedLocation == null,
-            onClick = { onLocationSelected(null) },
-            label = { Text("All") }
-        )
-        LocationType.entries.forEach { location ->
+        item {
+            FilterChip(
+                selected = selectedLocation == null,
+                onClick = { onLocationSelected(null) },
+                label = { Text("All", maxLines = 1) }
+            )
+        }
+        items(LocationType.entries.size) { index ->
+            val location = LocationType.entries[index]
             FilterChip(
                 selected = selectedLocation == location,
                 onClick = { onLocationSelected(location) },
-                label = { Text(location.displayName) }
+                label = { Text(location.displayName, maxLines = 1) }
             )
         }
     }
