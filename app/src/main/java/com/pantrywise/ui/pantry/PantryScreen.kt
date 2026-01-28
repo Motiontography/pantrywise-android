@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -352,7 +353,7 @@ fun StatusBadge(status: StockStatus) {
         StockStatus.OUT_OF_STOCK -> OutOfStockColor to Icons.Default.RemoveCircle
         StockStatus.EXPIRED -> ExpiredColor to Icons.Default.Error
         StockStatus.EXPIRING_SOON -> ExpiringSoonColor to Icons.Default.Schedule
-        StockStatus.UNKNOWN -> Color.Gray to Icons.Default.HelpOutline
+        StockStatus.UNKNOWN -> Color.Gray to Icons.AutoMirrored.Filled.HelpOutline
     }
 
     Icon(
